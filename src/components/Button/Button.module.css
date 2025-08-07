@@ -1,0 +1,18 @@
+.button {
+  padding: 10px;
+  border-radius: 16px;
+  font-size: 16px;
+  background-color: blue;
+}
+.smooth {
+  background-color: green;
+}
+.okey {
+  background-color: yellow;
+}
+.ride {
+  background-color: red;
+}
+.clear {
+  background-color: grey;
+}
