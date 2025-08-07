@@ -1,0 +1,14 @@
+.container {
+  background-color: rgb(27, 171, 116);
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  color: pink;
+  margin-bottom: 20px;
+}
