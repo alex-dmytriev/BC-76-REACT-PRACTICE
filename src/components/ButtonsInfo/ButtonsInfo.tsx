@@ -1,6 +1,6 @@
-import css from './ButtonsInfo.module.css';
-import Button from '../Button/Button';
-import type { VariantsTypes } from '../../types/type';
+import css from "./ButtonsInfo.module.css";
+import Button from "../Button/Button";
+import type { VariantsTypes } from "../../types/type";
 
 interface ButtonType {
   name: string;
@@ -8,10 +8,10 @@ interface ButtonType {
 }
 
 const buttons: ButtonType[] = [
-  { name: 'Smooth Landing', value: 'smooth' },
-  { name: 'Just Okay', value: 'okey' },
-  { name: '  Turbulent Ride', value: 'ride' },
-  { name: 'Clear Feedback', value: 'clear' },
+  { name: "Smooth Landing", value: "smooth" },
+  { name: "Just Okay", value: "okey" },
+  { name: "  Turbulent Ride", value: "ride" },
+  { name: "Clear Feedback", value: "clear" },
 ];
 
 const ButtonsInfo = () => {

@@ -1,5 +1,5 @@
-import css from './FlightInfo.module.css';
-import { IoIosAirplane } from 'react-icons/io';
+import css from "./FlightInfo.module.css";
+import { IoIosAirplane } from "react-icons/io";
 
 const FlightInfo = () => {
   return (
