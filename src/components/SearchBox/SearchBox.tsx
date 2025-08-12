@@ -1,5 +1,6 @@
 import css from "./SearchBox.module.css";
 import { FiSearch } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 interface SearchBoxProps {
   handleSubmit: (value: string) => void;
@@ -8,6 +9,10 @@ interface SearchBoxProps {
 const SearchBox = ({ handleSubmit }: SearchBoxProps) => {
   const onSubmit = (formData: FormData) => {
     const value = formData.get("search") as string;
+    if (!value.trim()) {
+      toast.error("Please enter a search term.");
+      return;
+    }
     handleSubmit(value);
   };
   return (

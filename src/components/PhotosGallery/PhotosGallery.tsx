@@ -2,8 +2,9 @@ import type { Photo } from "../../types/type";
 import css from "./PhotosGallery.module.css";
 interface PhotosGalleryProps {
   photos: Photo[];
+  handlePhotoClick: (photo: Photo) => void;
 }
-const PhotosGallery = ({ photos }: PhotosGalleryProps) => {
+const PhotosGallery = ({ photos, handlePhotoClick }: PhotosGalleryProps) => {
   return (
     <ul className={css.list}>
       {photos.map((photo) => (
@@ -15,7 +16,11 @@ const PhotosGallery = ({ photos }: PhotosGalleryProps) => {
               backgroundColor: photo.avg_color,
             }}
           >
-            <img src={photo.src.small} alt={photo.alt} />
+            <img
+              onClick={() => handlePhotoClick(photo)}
+              src={photo.src.small}
+              alt={photo.alt}
+            />
           </div>
         </li>
       ))}
