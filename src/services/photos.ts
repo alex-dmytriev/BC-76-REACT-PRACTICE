@@ -11,7 +11,12 @@ interface PexelsResponse {
   photos: Photo[];
 }
 
-export const getPhotos = async (query: string): Promise<Photo[]> => {
-  const { data } = await axios.get<PexelsResponse>(`search?query=${query}`);
+export const getPhotos = async (
+  query: string,
+  page: number
+): Promise<Photo[]> => {
+  const { data } = await axios.get<PexelsResponse>(
+    `search?query=${query}&page=${page}`
+  );
   return data.photos;
 };
