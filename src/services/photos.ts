@@ -9,14 +9,23 @@ axios.defaults.params = {
 };
 interface PexelsResponse {
   photos: Photo[];
+  total_results: number;
+  per_page: number;
+}
+interface PhotosResults {
+  photos: Photo[];
+  totalPages: number;
 }
 
 export const getPhotos = async (
   query: string,
-  page: number
-): Promise<Photo[]> => {
+  page: number,
+): Promise<PhotosResults> => {
   const { data } = await axios.get<PexelsResponse>(
-    `search?query=${query}&page=${page}`
+    `search?query=${query}&page=${page}`,
   );
-  return data.photos;
+  return {
+    photos: data.photos,
+    totalPages: Math.ceil(data.total_results / data.per_page),
+  };
 };

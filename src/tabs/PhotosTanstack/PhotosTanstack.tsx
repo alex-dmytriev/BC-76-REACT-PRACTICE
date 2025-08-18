@@ -6,8 +6,10 @@ import PhotosGallery from "../../components/PhotosGallery/PhotosGallery";
 import PhotoModal from "../../components/PhotoModal/PhotoModal";
 import Loader from "../../components/Loader/Loader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import Pagination from "../../components/Pagination/Pagination.tsx";
+import TaskForm from "../../components/TaskForm/TaskForm.tsx";
 
 const PhotosTanstack = () => {
   const [query, setQuery] = useState("");
@@ -18,20 +20,25 @@ const PhotosTanstack = () => {
     queryKey: ["photos", query, page],
     queryFn: () => getPhotos(query, page),
     enabled: query !== "",
+    placeholderData: keepPreviousData,
   });
-
   useEffect(() => {
-    if (isSuccess && data.length === 0) {
+    if (isSuccess && data?.photos.length === 0) {
       toast.error("Not found photos");
     }
   }, [data, isSuccess]);
 
   const handleSubmit = async (value: string) => {
+    setPage(1);
     setQuery(value);
   };
 
   const handlePhotoClick = (photo: Photo) => {
     setSelectedPhoto(photo);
+  };
+  const handleChangePage = (page: number) => {
+    setPage(page);
+    console.log(page);
   };
 
   const closeModal = () => {
@@ -41,16 +48,24 @@ const PhotosTanstack = () => {
   return (
     <div>
       <SearchBox handleSubmit={handleSubmit} />
-      {isSuccess && data.length > 0 && (
-        <PhotosGallery handlePhotoClick={handlePhotoClick} photos={data} />
+      <TaskForm />
+      {isSuccess && data?.photos.length > 0 && (
+        <PhotosGallery
+          handlePhotoClick={handlePhotoClick}
+          photos={data?.photos}
+        />
       )}
       {selectedPhoto && (
         <PhotoModal closeModal={closeModal} selectedPhoto={selectedPhoto} />
       )}
       {isLoading && <Loader />}
       {isError && <ErrorMessage />}
-      {isSuccess && data.length > 0 && (
-        <button onClick={() => setPage(page + 1)}>Load more</button>
+      {isSuccess && data?.photos.length > 0 && (
+        <Pagination
+          totalPages={data?.totalPages}
+          onChange={handleChangePage}
+          page={page}
+        />
       )}
     </div>
   );
