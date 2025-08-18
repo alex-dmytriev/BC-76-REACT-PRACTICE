@@ -20,14 +20,14 @@ const Photos = () => {
     setIsLoading(true);
     setIsError(false);
     try {
-      const data = await getPhotos(value);
-      if (!data.length) {
+      const data = await getPhotos(value, 1);
+      if (!data.photos.length) {
         //   toast("Photos not found.");
         setIsEmpty(true);
         return;
       }
 
-      setPhotos(data);
+      setPhotos(data.photos);
     } catch {
       setIsError(true);
     } finally {
