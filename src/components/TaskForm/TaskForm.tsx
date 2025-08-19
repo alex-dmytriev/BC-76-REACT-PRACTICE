@@ -1,6 +1,8 @@
 import { Field, Form, Formik, ErrorMessage, type FormikHelpers } from "formik";
 import * as Yup from "yup";
 import css from "./TaskForm.module.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTask } from "../../services/tasks";
 interface FormValues {
   title: string;
   description: string;
@@ -20,11 +22,16 @@ const ValidationSchema = Yup.object().shape({
     .required("Required"),
 });
 export default function TaskForm() {
+  const queryClient = useQueryClient()
+  const mutation = useMutation({
+    mutationFn: createTask, onSuccess: () => {
+    queryClient.invalidateQueries({queryKey: ["tasks"]})
+  }})
   const handleSubmit = (
     values: FormValues,
     actions: FormikHelpers<FormValues>,
   ) => {
-    console.log(values);
+    mutation.mutate(values);
     actions.resetForm();
   };
   return (

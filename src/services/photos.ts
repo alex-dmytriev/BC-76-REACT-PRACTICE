@@ -1,12 +1,13 @@
 import axios from "axios";
 import type { Photo } from "../types/type";
-
 const API_KEY = import.meta.env.VITE_PEXELS_KEY;
-axios.defaults.baseURL = "https://api.pexels.com/v1/";
-axios.defaults.headers.common["Authorization"] = API_KEY;
-axios.defaults.params = {
-  orientation: "landscape",
-};
+const instance = axios.create({
+  baseURL: 'https://api.pexels.com/v1/',
+  headers: { 'Authorization': API_KEY },
+  params: {orientation: "landscape"}
+});
+
+
 interface PexelsResponse {
   photos: Photo[];
   total_results: number;
@@ -21,7 +22,7 @@ export const getPhotos = async (
   query: string,
   page: number,
 ): Promise<PhotosResults> => {
-  const { data } = await axios.get<PexelsResponse>(
+  const { data } = await instance.get<PexelsResponse>(
     `search?query=${query}&page=${page}`,
   );
   return {

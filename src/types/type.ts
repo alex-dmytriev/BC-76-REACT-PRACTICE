@@ -15,3 +15,18 @@ export interface Photo {
     small: string;
   };
 }
+
+export interface Task {
+  createdAt: string;
+  description: string;
+  status: string;
+  title: string;
+  updatedAt: string;
+  _id: string;
+}
+
+export interface NewTask {
+  description: string;
+  status: string;
+  title: string;
+}

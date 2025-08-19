@@ -9,7 +9,7 @@ import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Pagination from "../../components/Pagination/Pagination.tsx";
-import TaskForm from "../../components/TaskForm/TaskForm.tsx";
+
 
 const PhotosTanstack = () => {
   const [query, setQuery] = useState("");
@@ -48,7 +48,7 @@ const PhotosTanstack = () => {
   return (
     <div>
       <SearchBox handleSubmit={handleSubmit} />
-      <TaskForm />
+      
       {isSuccess && data?.photos.length > 0 && (
         <PhotosGallery
           handlePhotoClick={handlePhotoClick}
