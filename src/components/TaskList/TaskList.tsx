@@ -8,16 +8,27 @@ interface TaskListProps {
 }
 
 const TaskList = ({ tasks }: TaskListProps) => {
-    const queryClient = useQueryClient()
-    const mutation = useMutation({mutationFn: deleteTask, onSuccess: ()=> {queryClient.invalidateQueries({queryKey: ["tasks"]})}})
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
   return (
     <ul className={css.list}>
       {tasks.map((task) => (
-        <li key={task._id} className={css.listItem}>
-          <h2 className={css.title}>{task.title}</h2> <p className={css.description}>{task.description}</p>
+        <li key={task.id} className={css.listItem}>
+          <h2 className={css.title}>{task.title}</h2>{" "}
+          <p className={css.description}>{task.description}</p>
           <div className={css.footer}>
             <span className={css.status}>{task.status}</span>
-            <button className={css.button} onClick={()=> mutation.mutate(task._id)}>Delete</button>
+            <button
+              className={css.button}
+              onClick={() => mutation.mutate(task.id)}
+            >
+              Delete
+            </button>
           </div>
         </li>
       ))}

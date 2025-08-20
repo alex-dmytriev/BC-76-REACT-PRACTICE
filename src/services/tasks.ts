@@ -2,26 +2,31 @@ import axios from "axios";
 import type { NewTask, Task } from "../types/type";
 
 const instance = axios.create({
-    baseURL: 'https://tasks-back-9h2m.onrender.com',
-    headers: {'Authorization': `Bearer ${import.meta.env.VITE_TASKS_TOKEN}`}
-  });
-  
-interface FetchedTasksResponse {
-    tasks: Task[];
-    totalPages: number;
-  }
+  baseURL: "https://tasks-back-9h2m.onrender.com",
+  headers: { Authorization: `Bearer ${import.meta.env.VITE_TASKS_TOKEN}` },
+});
 
-export async function fetchedTasks(): Promise<FetchedTasksResponse> {
-    const { data } = await instance.get<{data: FetchedTasksResponse}>("/tasks", {params: {perPage: 100}}) 
-    return data.data;
+interface FetchedTasksResponse {
+  tasks: Task[];
+  totalPages: number;
+}
+
+export async function fetchedTasks(
+  page: number,
+  search: string
+): Promise<FetchedTasksResponse> {
+  const { data } = await instance.get<FetchedTasksResponse>("/tasks", {
+    params: { perPage: 12, page, search },
+  });
+  return data;
 }
 
 export async function createTask(newTask: NewTask): Promise<Task> {
-    const { data } = await instance.post<{data: Task}>("/tasks", newTask)
-    return data.data;
+  const { data } = await instance.post<Task>("/tasks", newTask);
+  return data;
 }
 
 export async function deleteTask(id: string): Promise<Task> {
-    const { data } = await instance.delete(`/tasks/${id}`)
-    return data.data;
+  const { data } = await instance.delete<Task>(`/tasks/${id}`);
+  return data;
 }

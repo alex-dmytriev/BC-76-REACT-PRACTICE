@@ -8,6 +8,11 @@ interface FormValues {
   description: string;
   status: string;
 }
+
+interface TaskFormProps {
+  closeModal: () => void;
+}
+
 const ValidationSchema = Yup.object().shape({
   title: Yup.string()
     .min(2, "Title must have min 2 characters")
@@ -21,15 +26,18 @@ const ValidationSchema = Yup.object().shape({
     .oneOf(["todo", "in-progress", "review", "done", "blocked", "canceled"])
     .required("Required"),
 });
-export default function TaskForm() {
-  const queryClient = useQueryClient()
+export default function TaskForm({ closeModal }: TaskFormProps) {
+  const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: createTask, onSuccess: () => {
-    queryClient.invalidateQueries({queryKey: ["tasks"]})
-  }})
+    mutationFn: createTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      closeModal();
+    },
+  });
   const handleSubmit = (
     values: FormValues,
-    actions: FormikHelpers<FormValues>,
+    actions: FormikHelpers<FormValues>
   ) => {
     mutation.mutate(values);
     actions.resetForm();

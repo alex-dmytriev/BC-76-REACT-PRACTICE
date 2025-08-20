@@ -22,7 +22,7 @@ export interface Task {
   status: string;
   title: string;
   updatedAt: string;
-  _id: string;
+  id: string;
 }
 
 export interface NewTask {
